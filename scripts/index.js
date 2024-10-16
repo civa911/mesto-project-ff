@@ -10,6 +10,7 @@ const createCard = function (cardData) {
     cardElement.querySelector('.card__image').src = cardData.link;
     cardElement.querySelector('.card__image').alt = cardData.name;
     cardElement.addEventListener('click', addEventListener);
+    
     return cardElement;
 }
 
@@ -21,7 +22,7 @@ const deleteCard = function (cardElement) {
 }
 
 // @todo: Вывести карточки на страницу
-const renderCards = function (cards) {
+const renderCard = function (cards) {
     const placesListElement = document.querySelector('.places__list');
     cards.forEach(cardData => {
         const cardElement = createCard(cardData);
@@ -35,4 +36,4 @@ const renderCards = function (cards) {
     });
 }
 
-renderCards(initialCards);
+renderCard(initialCards);
