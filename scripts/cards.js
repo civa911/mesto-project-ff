@@ -23,16 +23,4 @@ const initialCards = [
       name: "Байкал",
       link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
     },
-    {
-      name: "Архитектура",
-      link: "./images/card_4.jpg", 
-    },
-    {
-      name: "Леса",
-      link: "./images/card_5.jpg", 
-    },
-    {
-      name: "Горы",
-      link: "./images/card_6.jpg", 
-    },
 ];
