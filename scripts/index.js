@@ -9,12 +9,15 @@ const addCardButton = document.querySelector('.profile__add-button');
 const popupNewCard = document.querySelector('.popup_type_new-card');
 const closeButton = popupNewCard.querySelector('.popup__close');
 
+const newCardForm = popupNewCard.querySelector('.popup__form');
+const nameInput = popupNewCard.querySelector('.popup__input_type_card-name');
+const linkInput = popupNewCard.querySelector('.popup__input_type_url');
+
 // @todo: DOM узлы
 
 
-
 //Функция лайка карточки
-document.addEventListener('DOMContentLoaded', () => {
+const like = document.addEventListener('DOMContentLoaded', () => {
     const likeCardButtons = document.querySelectorAll('.card__like-button');
     
     likeCardButtons.forEach(button => {
@@ -22,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
             evt.currentTarget.classList.toggle('card__like-button_is-active');
         });
     });
-})
+});
 
 // Функция открытия Popup
 function openImagePopup(imageSrc, imageCaption) {
@@ -87,3 +90,31 @@ const renderCard = function (cards) {
 }
 
 renderCard(initialCards);
+
+// Функция добавления новой карточки
+function handleCardFormSubmit(evt) {
+    evt.preventDefault();
+    
+    const newCard = {
+        name: nameInput.value,
+        link: linkInput.value
+    };
+    
+    const cardElement = createCard(newCard);
+    document.querySelector('.places__list').prepend(cardElement);
+    
+    
+    popupNewCard.classList.remove('popup_is-opened');
+    newCardForm.reset();
+
+    const cardDeleteButtons = document.querySelectorAll('.card__delete-button');
+    cardDeleteButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            deleteCard(button.closest('.card'));
+        });
+    });
+    
+}
+
+// Добавляем слушатель на форму
+newCardForm.addEventListener('submit', handleCardFormSubmit);
