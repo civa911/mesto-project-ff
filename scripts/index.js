@@ -4,6 +4,10 @@ const imagePopup = document.querySelector('.popup_type_image');
 const popupImage = imagePopup.querySelector('.popup__image');
 const popupCaption = imagePopup.querySelector('.popup__caption');
 const imagePopupCloseButton = imagePopup.querySelector('.popup__close');
+const addCards = document.querySelectorAll('#popup_type_new-card').content;
+const addCardButton = document.querySelector('.profile__add-button');
+const popupNewCard = document.querySelector('.popup_type_new-card');
+const closeButton = popupNewCard.querySelector('.popup__close');
 
 // @todo: DOM узлы
 
@@ -50,8 +54,14 @@ const createCard = function (cardData) {
     
     cardElement.querySelector('.card__title').textContent = cardData.name;
     
-    cardElement.addEventListener('click', addEventListener);
-    
+    addCardButton.addEventListener('click', () => {
+        popupNewCard.classList.add('popup_is-opened');
+    });
+
+    closeButton.addEventListener('click', () => {
+        popupNewCard.classList.remove('popup_is-opened');
+    });
+
     return cardElement;
 }
 
