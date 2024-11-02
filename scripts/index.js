@@ -4,7 +4,6 @@ const imagePopup = document.querySelector('.popup_type_image');
 const popupImage = imagePopup.querySelector('.popup__image');
 const popupCaption = imagePopup.querySelector('.popup__caption');
 const imagePopupCloseButton = imagePopup.querySelector('.popup__close');
-const addCards = document.querySelectorAll('#popup_type_new-card').content;
 const addCardButton = document.querySelector('.profile__add-button');
 const popupNewCard = document.querySelector('.popup_type_new-card');
 const closeButton = popupNewCard.querySelector('.popup__close');
@@ -57,6 +56,11 @@ const createCard = function (cardData) {
     
     cardElement.querySelector('.card__title').textContent = cardData.name;
     
+    const likeButton = cardElement.querySelector('.card__like-button');
+    likeButton.addEventListener('click', evt => {
+        evt.currentTarget.classList.toggle('card__like-button_is-active');
+    });
+
     addCardButton.addEventListener('click', () => {
         popupNewCard.classList.add('popup_is-opened');
     });
@@ -81,6 +85,14 @@ const renderCard = function (cards) {
         const cardElement = createCard(cardData);
         placesListElement.append(cardElement);
     });
+
+    const likeCardButtons = document.querySelectorAll('.card__like-button');
+    likeCardButtons.forEach(button => {
+        button.addEventListener('click', evt => {
+            evt.currentTarget.classList.toggle('card__like-button_is-active');
+        });
+    });
+
     const cardDeleteButtons = document.querySelectorAll('.card__delete-button');
     cardDeleteButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -113,8 +125,8 @@ function handleCardFormSubmit(evt) {
             deleteCard(button.closest('.card'));
         });
     });
+
     
 }
 
-// Добавляем слушатель на форму
 newCardForm.addEventListener('submit', handleCardFormSubmit);
