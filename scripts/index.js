@@ -12,6 +12,13 @@ const linkInput = popupNewCard.querySelector('.popup__input_type_url');
 
 // @todo: DOM узлы
 
+addCardButton.addEventListener('click', () => {
+    popupNewCard.classList.add('popup_is-opened');
+ });
+
+ closeButton.addEventListener('click', () => {
+    popupNewCard.classList.remove('popup_is-opened');
+ });
 
 // @todo: Функция создания карточки
 const createCard = function (cardData) {
@@ -33,41 +40,32 @@ const createCard = function (cardData) {
         cardElement.remove();
     });
 
-    addCardButton.addEventListener('click', () => {
-       popupNewCard.classList.add('popup_is-opened');
-    });
-
-    closeButton.addEventListener('click', () => {
-       popupNewCard.classList.remove('popup_is-opened');
-    });
-
     return cardElement;
 }
 
+const placesListElement = document.querySelector('.places__list');
+
+newCardForm.addEventListener('submit', function(evt) {
+    evt.preventDefault();
+    
+    const newCard = {
+        name: nameInput.value,
+        link: linkInput.value
+    };
+    
+    const cardElement = createCard(newCard);
+    placesListElement.prepend(cardElement);
+    
+    popupNewCard.classList.remove('popup_is-opened');
+    newCardForm.reset();
+});
+
 // @todo: Вывести карточки на страницу
 function renderCard(cards) {
-    const placesListElement = document.querySelector('.places__list');
-
-    
+        
     cards.forEach(cardData => {
         const cardElement = createCard(cardData);
         placesListElement.append(cardElement);
-    });
-
-    
-    newCardForm.addEventListener('submit', function(evt) {
-        evt.preventDefault();
-        
-        const newCard = {
-            name: nameInput.value,
-            link: linkInput.value
-        };
-        
-        const cardElement = createCard(newCard);
-        placesListElement.prepend(cardElement);
-        
-        popupNewCard.classList.remove('popup_is-opened');
-        newCardForm.reset();
     });
 }
 
