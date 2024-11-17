@@ -48,7 +48,6 @@ function handleEscClose(evt) {
   }
 }
 
-
 // Обновленная функция открытия Popup с анимацией
 function openImagePopup(imageSrc, imageCaption) {
   popupImage.src = imageSrc;
@@ -92,11 +91,19 @@ const createCard = function (cardData) {
   });
 
   addCardButton.addEventListener("click", () => {
-    popupNewCard.classList.add("popup_is-opened");
+    popupNewCard.classList.add("popup_is-animated");
+    setTimeout(() => {
+      popupNewCard.classList.add("popup_is-opened");
+    }, 0);
+    document.addEventListener("keydown", handleEscClose);
   });
 
   closeButton.addEventListener("click", () => {
     popupNewCard.classList.remove("popup_is-opened");
+    setTimeout(() => {
+        popupNewCard.classList.remove("popup_is-animated");
+      }, 300);
+      newCardForm.reset();
   });
 
   return cardElement;
