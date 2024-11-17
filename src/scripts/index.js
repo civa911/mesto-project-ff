@@ -173,18 +173,18 @@ editProfileButton.addEventListener("click", () => {
   setTimeout(() => {
     popupEditProfile.classList.add("popup_is-opened");
   }, 0);
-  document.addEventListener("keydown", handleEscClose); // Добавляем обработчик
+  document.addEventListener("keydown", handleEscClose); 
 });
 
-// Обновленная функция закрытия модального окна редактирования профиля с анимацией
+// 
 closeEditProfileButton.addEventListener("click", () => {
   popupEditProfile.classList.remove("popup_is-opened");
   setTimeout(() => {
     popupEditProfile.classList.remove("popup_is-animated");
-  }, 300); // Задержка должна совпадать с длительностью анимации в CSS
+  }, 300); 
 });
 
-// Обработка отправки формы редактирования профиля
+
 editProfileForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
   profileTitle.textContent = nameInputEdit.value;
@@ -192,12 +192,12 @@ editProfileForm.addEventListener("submit", (evt) => {
   popupEditProfile.classList.remove("popup_is-opened");
 });
 
-// Обновленная функция для закрытия попапа
+
 function closePopup(popup) {
   popup.classList.remove("popup_is-opened");
   setTimeout(() => {
     popup.classList.remove("popup_is-animated");
-  }, 300); // Задержка должна совпадать с длительностью анимации в CSS
+  }, 300); 
 }
 
 // Закрытие попапа кликом на оверлей
