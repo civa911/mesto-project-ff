@@ -48,19 +48,25 @@ function handleEscClose(evt) {
   }
 }
 
-// Обновленная функция открытия Popup
+
+// Обновленная функция открытия Popup с анимацией
 function openImagePopup(imageSrc, imageCaption) {
   popupImage.src = imageSrc;
   popupImage.alt = imageCaption;
   popupCaption.textContent = imageCaption;
-  imagePopup.classList.add("popup_is-opened");
+  imagePopup.classList.add("popup_is-animated");
+  setTimeout(() => {
+    imagePopup.classList.add("popup_is-opened");
+  }, 0);
   document.addEventListener("keydown", handleEscClose); // Добавляем обработчик
 }
 
-// Обновленная функция закрытия Popup
+// Обновленная функция закрытия Popup с анимацией
 function closeImagePopup() {
   imagePopup.classList.remove("popup_is-opened");
-  document.removeEventListener("keydown", handleEscClose); // Удаляем обработчик
+  setTimeout(() => {
+    imagePopup.classList.remove("popup_is-animated");
+  }, 300); // Задержка должна совпадать с длительностью анимации в CSS
 }
 
 // Добавляем обработчик закрытия Popup
@@ -152,18 +158,23 @@ function handleCardFormSubmit(evt) {
 
 newCardForm.addEventListener("submit", handleCardFormSubmit);
 
-// Обновленная функция открытия модального окна редактирования профиля
+// Обновленная функция открытия модального окна редактирования профиля с анимацией
 editProfileButton.addEventListener("click", () => {
   nameInputEdit.value = profileTitle.textContent;
   descriptionInputEdit.value = profileDescription.textContent;
-  popupEditProfile.classList.add("popup_is-opened");
+  popupEditProfile.classList.add("popup_is-animated");
+  setTimeout(() => {
+    popupEditProfile.classList.add("popup_is-opened");
+  }, 0);
   document.addEventListener("keydown", handleEscClose); // Добавляем обработчик
 });
 
-// Обновленная функция закрытия модального окна редактирования профиля
+// Обновленная функция закрытия модального окна редактирования профиля с анимацией
 closeEditProfileButton.addEventListener("click", () => {
   popupEditProfile.classList.remove("popup_is-opened");
-  document.removeEventListener("keydown", handleEscClose); // Удаляем обработчик
+  setTimeout(() => {
+    popupEditProfile.classList.remove("popup_is-animated");
+  }, 300); // Задержка должна совпадать с длительностью анимации в CSS
 });
 
 // Обработка отправки формы редактирования профиля
@@ -174,9 +185,12 @@ editProfileForm.addEventListener("submit", (evt) => {
   popupEditProfile.classList.remove("popup_is-opened");
 });
 
-// Функция для закрытия попапа
+// Обновленная функция для закрытия попапа
 function closePopup(popup) {
   popup.classList.remove("popup_is-opened");
+  setTimeout(() => {
+    popup.classList.remove("popup_is-animated");
+  }, 300); // Задержка должна совпадать с длительностью анимации в CSS
 }
 
 // Закрытие попапа кликом на оверлей
