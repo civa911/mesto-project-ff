@@ -1,3 +1,11 @@
+//Функция лайка карточки
+export function addLikeButtonHandler(cardElement) {
+  const likeButton = cardElement.querySelector(".card__like-button");
+  likeButton.addEventListener("click", (evt) => {
+    evt.currentTarget.classList.toggle("card__like-button_is-active");
+  });
+}
+
 export const initialCards = [
     {
       name: "Архыз",

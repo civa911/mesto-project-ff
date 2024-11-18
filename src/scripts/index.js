@@ -1,12 +1,12 @@
 // @todo: Темплейт карточки
-
+import { addLikeButtonHandler } from "../scripts/cards.js";
 import "../pages/index.css";
 import { initialCards } from "../scripts/cards.js";
 // @todo: Темплейт карточки
 const cardTemplate = document.querySelector("#card-template").content;
 const imagePopup = document.querySelector(".popup_type_image");
 const popupImage = imagePopup.querySelector(".popup__image");
-const popupCaption = imagePopup.querySelector(".popup__caption");
+const imagePopupCaption = imagePopup.querySelector(".popup__caption");
 const imagePopupCloseButton = imagePopup.querySelector(".popup__close");
 const addCardButton = document.querySelector(".profile__add-button");
 const popupNewCard = document.querySelector(".popup_type_new-card");
@@ -28,15 +28,15 @@ const profileDescription = document.querySelector(".profile__description");
 // @todo: DOM узлы
 
 //Функция лайка карточки
-const like = document.addEventListener("DOMContentLoaded", () => {
-  const likeCardButtons = document.querySelectorAll(".card__like-button");
+// const like = document.addEventListener("DOMContentLoaded", () => {
+//   const likeCardButtons = document.querySelectorAll(".card__like-button");
 
-  likeCardButtons.forEach((button) => {
-    button.addEventListener("click", (evt) => {
-      evt.currentTarget.classList.toggle("card__like-button_is-active");
-    });
-  });
-});
+//   likeCardButtons.forEach((button) => {
+//     button.addEventListener("click", (evt) => {
+//       evt.currentTarget.classList.toggle("card__like-button_is-active");
+//     });
+//   });
+// });
 
 // Функция для закрытия попапа нажатием на Esc
 function handleEscClose(evt) {
@@ -52,7 +52,7 @@ function handleEscClose(evt) {
 function openImagePopup(imageSrc, imageCaption) {
   popupImage.src = imageSrc;
   popupImage.alt = imageCaption;
-  popupCaption.textContent = imageCaption;
+  imagePopupCaption.textContent = imageCaption;
   imagePopup.classList.add("popup_is-animated");
   setTimeout(() => {
     imagePopup.classList.add("popup_is-opened");
@@ -85,10 +85,13 @@ const createCard = function (cardData) {
 
   cardElement.querySelector(".card__title").textContent = cardData.name;
 
-  const likeButton = cardElement.querySelector(".card__like-button");
-  likeButton.addEventListener("click", (evt) => {
-    evt.currentTarget.classList.toggle("card__like-button_is-active");
-  });
+  addLikeButtonHandler(cardElement); // Добавляем обработчик лайка
+
+
+  // const likeButton = cardElement.querySelector(".card__like-button");
+  // likeButton.addEventListener("click", (evt) => {
+  //   evt.currentTarget.classList.toggle("card__like-button_is-active");
+  // });
 
   addCardButton.addEventListener("click", () => {
     popupNewCard.classList.add("popup_is-animated");
@@ -123,12 +126,12 @@ const renderCard = function (cards) {
     placesListElement.append(cardElement);
   });
 
-  const likeCardButtons = document.querySelectorAll(".card__like-button");
-  likeCardButtons.forEach((button) => {
-    button.addEventListener("click", (evt) => {
-      evt.currentTarget.classList.toggle("card__like-button_is-active");
-    });
-  });
+  // const likeCardButtons = document.querySelectorAll(".card__like-button");
+  // likeCardButtons.forEach((button) => {
+  //   button.addEventListener("click", (evt) => {
+  //     evt.currentTarget.classList.toggle("card__like-button_is-active");
+  //   });
+  // });
 
   const cardDeleteButtons = document.querySelectorAll(".card__delete-button");
   cardDeleteButtons.forEach((button) => {
