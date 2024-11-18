@@ -1,11 +1,8 @@
-// @todo: Темплейт карточки
 import { handleEscClose, openPopup, closePopup, closePopupOnOverlayClick } from "../scripts/modal.js";
 import { initialCards } from "../scripts/cards.js";
 import { createCard } from "../scripts/card.js";
-//import { addLikeButtonHandler } from "../scripts/card.js";
 import "../pages/index.css";
 
-// @todo: Темплейт карточки
 const imagePopup = document.querySelector(".popup_type_image");
 const popupImage = imagePopup.querySelector(".popup__image");
 const imagePopupCaption = imagePopup.querySelector(".popup__caption");
@@ -26,47 +23,31 @@ const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 const placesListElement = document.querySelector(".places__list");
 
-// обработчик для открытия попапа с новой карточкой
+// Открытие попапа с новой карточкой
 addCardButton.addEventListener("click", () => {
-  popupNewCard.classList.add("popup_is-animated");
-  setTimeout(() => {
-    popupNewCard.classList.add("popup_is-opened");
-  }, 0);
-  document.addEventListener("keydown", handleEscClose);
+  openPopup(popupNewCard);
 });
 
-// обработчик для закрытия попапа с новой карточкой
+// Закрытие попапа с новой карточкой
 closeButton.addEventListener("click", () => {
   closePopup(popupNewCard);
 });
 
-// обработчик закрытия Popup
-imagePopupCloseButton.addEventListener("click", closeImagePopup);
+// Закрытие попапа изображения
+imagePopupCloseButton.addEventListener("click", () => {
+  closePopup(imagePopup);
+});
 
-// Функция открытия Popup с анимацией
+// Открытие изображения
 function openImagePopup(cardData) {
   popupImage.src = cardData.link;
   popupImage.alt = cardData.name;
   imagePopupCaption.textContent = cardData.name;
-
-  imagePopup.classList.add("popup_is-animated");
-  setTimeout(() => {
-    openPopup(imagePopup);
-  }, 0);
-  document.addEventListener("keydown", (evt) => handleEscClose(evt, closePopup)); // Добавляем обработчик
+  openPopup(imagePopup);
 }
 
-// Функция закрытия Popup с анимацией
-function closeImagePopup() {
-  imagePopup.classList.remove("popup_is-opened");
-  setTimeout(() => {
-    imagePopup.classList.remove("popup_is-animated");
-  }, 300); 
-}
-
-// @todo: Вывести карточки на страницу
+// Вывод карточек на страницу
 const renderCard = function (cards) {
-  const placesListElement = document.querySelector(".places__list");
   cards.forEach((cardData) => {
     const cardElement = createCard(cardData, openImagePopup);
     placesListElement.append(cardElement);
@@ -75,7 +56,7 @@ const renderCard = function (cards) {
 
 renderCard(initialCards);
 
-// Функция добавления новой карточки
+// Добавление новой карточки
 function handleCardFormSubmit(evt) {
   evt.preventDefault();
 
@@ -93,29 +74,22 @@ function handleCardFormSubmit(evt) {
 
 newCardForm.addEventListener("submit", handleCardFormSubmit);
 
-//Функция открытия модального окна редактирования профиля с анимацией
+// Открытие модального окна редактирования профиля
 editProfileButton.addEventListener("click", () => {
   nameInputEdit.value = profileTitle.textContent;
   descriptionInputEdit.value = profileDescription.textContent;
-  popupEditProfile.classList.add("popup_is-animated");
-  setTimeout(() => {
-    popupEditProfile.classList.add("popup_is-opened");
-  }, 0);
-  document.addEventListener("keydown", handleEscClose); 
+  openPopup(popupEditProfile);
 });
 
 closeEditProfileButton.addEventListener("click", () => {
-  popupEditProfile.classList.remove("popup_is-opened");
-  setTimeout(() => {
-    popupEditProfile.classList.remove("popup_is-animated");
-  }, 300); 
+  closePopup(popupEditProfile);
 });
 
 editProfileForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
   profileTitle.textContent = nameInputEdit.value;
   profileDescription.textContent = descriptionInputEdit.value;
-  popupEditProfile.classList.remove("popup_is-opened");
+  closePopup(popupEditProfile);
 });
 
 // Добавляем обработчики для всех попапов
