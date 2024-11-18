@@ -7,6 +7,9 @@ export function openPopup(popup) {
 // Функция закрытия модального окна
 export function closePopup(popup) {
   popup.classList.remove("popup_is-opened");
+  setTimeout(() => {
+    popup.classList.remove("popup_is-animated");
+  }, 300);
   document.removeEventListener("keydown", handleEscClose);
 }
 
@@ -17,5 +20,12 @@ export function handleEscClose(evt) {
     if (openedPopup) {
       closePopup(openedPopup);
     }
+  }
+}
+
+// Функция закрытия попапа кликом на оверлей
+export function closePopupOnOverlayClick(evt) {
+  if (evt.target.classList.contains("popup_is-opened")) {
+    closePopup(evt.target);
   }
 }
