@@ -8,6 +8,7 @@ export function addLikeButtonHandler(cardElement) {
     evt.currentTarget.classList.toggle("card__like-button_is-active");
   });
 }
+
 //Функция создания карточки
 export const createCard = function (cardData, onOpenImagePopup) {
   const cardElement = cardTemplate.cloneNode(true).querySelector('.card');;

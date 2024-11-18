@@ -2,7 +2,9 @@ import { handleEscClose, openPopup, closePopup, closePopupOnOverlayClick } from 
 import { initialCards } from "../scripts/cards.js";
 import { createCard } from "../scripts/card.js";
 import "../pages/index.css";
+import avatarImage from '../images/avatar1.jpg';
 
+const profileAvatar = document.querySelector('.profile__image');
 const imagePopup = document.querySelector(".popup_type_image");
 const popupImage = imagePopup.querySelector(".popup__image");
 const imagePopupCaption = imagePopup.querySelector(".popup__caption");
@@ -22,6 +24,9 @@ const descriptionInputEdit = popupEditProfile.querySelector(".popup__input_type_
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 const placesListElement = document.querySelector(".places__list");
+
+// Установка аватара
+profileAvatar.style.backgroundImage = `url(${avatarImage})`;
 
 // Открытие попапа с новой карточкой
 addCardButton.addEventListener("click", () => {
