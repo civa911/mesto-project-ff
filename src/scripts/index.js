@@ -30,6 +30,11 @@ profileAvatar.style.backgroundImage = `url(${avatarImage})`;
 
 // Открытие попапа с новой карточкой
 addCardButton.addEventListener("click", () => {
+  newCardForm.reset();
+  newCardForm.querySelectorAll('.popup__input-error').forEach((errorElement) => {
+    errorElement.textContent = '';
+  });
+  toggleButtonState(newCardForm, newCardForm.querySelector('.popup__button'));
   openPopup(popupNewCard);
 });
 
@@ -79,10 +84,40 @@ function handleCardFormSubmit(evt) {
 
 newCardForm.addEventListener("submit", handleCardFormSubmit);
 
-// Открытие модального окна редактирования профиля
+// Функция для проверки валидности формы
+function checkInputValidity(inputElement, errorElement) {
+  if (!inputElement.validity.valid) {
+    errorElement.textContent = inputElement.validationMessage;
+  } else {
+    errorElement.textContent = '';
+  }
+}
+
+// Функция для управления состоянием кнопки
+function toggleButtonState(formElement, buttonElement) {
+  if (formElement.checkValidity()) {
+    buttonElement.removeAttribute('disabled');
+  } else {
+    buttonElement.setAttribute('disabled', true);
+  }
+}
+
+// Обработчик ввода для формы редактирования профиля
+editProfileForm.addEventListener('input', (evt) => {
+  const inputElement = evt.target;
+  const errorElement = editProfileForm.querySelector(`.${inputElement.name}-input-error`);
+  checkInputValidity(inputElement, errorElement);
+  toggleButtonState(editProfileForm, editProfileForm.querySelector('.popup__button'));
+});
+
+// Очистка ошибок при открытии формы
 editProfileButton.addEventListener("click", () => {
   nameInputEdit.value = profileTitle.textContent;
   descriptionInputEdit.value = profileDescription.textContent;
+  editProfileForm.querySelectorAll('.popup__input-error').forEach((errorElement) => {
+    errorElement.textContent = '';
+  });
+  toggleButtonState(editProfileForm, editProfileForm.querySelector('.popup__button'));
   openPopup(popupEditProfile);
 });
 
@@ -100,4 +135,12 @@ editProfileForm.addEventListener("submit", (evt) => {
 // Добавляем обработчики для всех попапов
 document.querySelectorAll(".popup").forEach((popup) => {
   popup.addEventListener("click", closePopupOnOverlayClick);
+});
+
+// Обработчик ввода для формы добавления нового места
+newCardForm.addEventListener('input', (evt) => {
+  const inputElement = evt.target;
+  const errorElement = newCardForm.querySelector(`.${inputElement.name}-input-error`);
+  checkInputValidity(inputElement, errorElement);
+  toggleButtonState(newCardForm, newCardForm.querySelector('.popup__button'));
 });
