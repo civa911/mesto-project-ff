@@ -1,6 +1,7 @@
 import { handleEscClose, openPopup, closePopup, closePopupOnOverlayClick } from "../scripts/modal.js";
 import { initialCards } from "../scripts/cards.js";
 import { createCard } from "../scripts/card.js";
+import { enableValidation, clearValidation } from "../scripts/validation.js";
 import "../pages/index.css";
 import avatarImage from '../images/avatar1.jpg';
 
@@ -31,10 +32,7 @@ profileAvatar.style.backgroundImage = `url(${avatarImage})`;
 // Открытие попапа с новой карточкой
 addCardButton.addEventListener("click", () => {
   newCardForm.reset();
-  newCardForm.querySelectorAll('.popup__input-error').forEach((errorElement) => {
-    errorElement.textContent = '';
-  });
-  toggleButtonState(newCardForm, newCardForm.querySelector('.popup__button'));
+  clearValidation(newCardForm, validationConfig);
   openPopup(popupNewCard);
 });
 
@@ -84,40 +82,11 @@ function handleCardFormSubmit(evt) {
 
 newCardForm.addEventListener("submit", handleCardFormSubmit);
 
-// Функция для проверки валидности формы
-function checkInputValidity(inputElement, errorElement) {
-  if (!inputElement.validity.valid) {
-    errorElement.textContent = inputElement.validationMessage;
-  } else {
-    errorElement.textContent = '';
-  }
-}
-
-// Функция для управления состоянием кнопки
-function toggleButtonState(formElement, buttonElement) {
-  if (formElement.checkValidity()) {
-    buttonElement.removeAttribute('disabled');
-  } else {
-    buttonElement.setAttribute('disabled', true);
-  }
-}
-
-// Обработчик ввода для формы редактирования профиля
-editProfileForm.addEventListener('input', (evt) => {
-  const inputElement = evt.target;
-  const errorElement = editProfileForm.querySelector(`.${inputElement.name}-input-error`);
-  checkInputValidity(inputElement, errorElement);
-  toggleButtonState(editProfileForm, editProfileForm.querySelector('.popup__button'));
-});
-
 // Очистка ошибок при открытии формы
 editProfileButton.addEventListener("click", () => {
   nameInputEdit.value = profileTitle.textContent;
   descriptionInputEdit.value = profileDescription.textContent;
-  editProfileForm.querySelectorAll('.popup__input-error').forEach((errorElement) => {
-    errorElement.textContent = '';
-  });
-  toggleButtonState(editProfileForm, editProfileForm.querySelector('.popup__button'));
+  clearValidation(editProfileForm, validationConfig);
   openPopup(popupEditProfile);
 });
 
@@ -144,3 +113,15 @@ newCardForm.addEventListener('input', (evt) => {
   checkInputValidity(inputElement, errorElement);
   toggleButtonState(newCardForm, newCardForm.querySelector('.popup__button'));
 });
+
+// Включение валидации
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+};
+
+enableValidation(validationConfig);
