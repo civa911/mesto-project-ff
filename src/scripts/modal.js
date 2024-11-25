@@ -1,18 +1,17 @@
+document.addEventListener("DOMContentLoaded", () => {
+  const popups = document.querySelectorAll('.popup');
+  popups.forEach(popup => popup.classList.add("popup_is-animated"));
+});
+
 // Функция открытия модального окна
 export function openPopup(popup) {
-  popup.classList.add("popup_is-animated");
-  setTimeout(() => {
-    popup.classList.add("popup_is-opened");
-  }, 0);
+  popup.classList.add("popup_is-opened");
   document.addEventListener("keydown", handleEscClose);
 }
 
 // Функция закрытия модального окна
 export function closePopup(popup) {
   popup.classList.remove("popup_is-opened");
-  setTimeout(() => {
-    popup.classList.remove("popup_is-animated");
-  }, 300);
   document.removeEventListener("keydown", handleEscClose);
 }
 
