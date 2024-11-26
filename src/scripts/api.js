@@ -1,4 +1,4 @@
-const config = {
+const apiConfig = {
   baseUrl: 'https://nomoreparties.co/v1/wff-cohort-21',
   headers: {
     authorization: 'b81b799d-5dff-409c-bb91-a9e0a45c29ac',
@@ -6,54 +6,52 @@ const config = {
   }
 };
 
-// Обработчик ошибок
-const handleResponse = (res) => {
+const handleApiResponse = (res) => {
   if (res.ok) {
     return res.json();
   }
   return Promise.reject(`Ошибка: ${res.status}`);
 };
 
-// Запросы к API
-export const updateProfileInfoRequest = (data) => fetch(`${config.baseUrl}/users/me`, {
+export const updateProfile = (data) => fetch(`${apiConfig.baseUrl}/users/me`, {
   method: 'PATCH',
-  headers: config.headers,
+  headers: apiConfig.headers,
   body: JSON.stringify(data)
-}).then(handleResponse);
+}).then(handleApiResponse);
 
-export const getUserInfo = () => fetch(`${config.baseUrl}/users/me`, {
+export const fetchUserInfo = () => fetch(`${apiConfig.baseUrl}/users/me`, {
   method: 'GET',
-  headers: config.headers,
-}).then(handleResponse);
+  headers: apiConfig.headers,
+}).then(handleApiResponse);
 
-export const getCardsRequest = () => fetch(`${config.baseUrl}/cards`, {
+export const fetchCards = () => fetch(`${apiConfig.baseUrl}/cards`, {
   method: 'GET',
-  headers: config.headers,
-}).then(handleResponse);
+  headers: apiConfig.headers,
+}).then(handleApiResponse);
 
-export const updateAvatarRequest = (avatarLink) => fetch(`${config.baseUrl}/users/me/avatar`, {
+export const removeLike = (cardId) => fetch(`${apiConfig.baseUrl}/cards/likes/${cardId}`, {
+  method: 'DELETE',
+  headers: apiConfig.headers,
+}).then(handleApiResponse);
+
+export const deleteCard = (cardId) => fetch(`${apiConfig.baseUrl}/cards/${cardId}`, {
+  method: 'DELETE',
+  headers: apiConfig.headers,
+}).then(handleApiResponse);
+
+export const updateAvatar = (avatarLink) => fetch(`${apiConfig.baseUrl}/users/me/avatar`, {
   method: 'PATCH',
-  headers: config.headers,
+  headers: apiConfig.headers,
   body: JSON.stringify({ avatar: avatarLink })
-}).then(handleResponse);
+}).then(handleApiResponse);
 
-export const createNewCardRequest = (cardData) => fetch(`${config.baseUrl}/cards`, {
+export const createCard = (cardData) => fetch(`${apiConfig.baseUrl}/cards`, {
   method: 'POST',
-  headers: config.headers,
+  headers: apiConfig.headers,
   body: JSON.stringify(cardData)
-}).then(handleResponse);
+}).then(handleApiResponse);
 
-export const putLikeRequest = (cardId) => fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+export const addLike = (cardId) => fetch(`${apiConfig.baseUrl}/cards/likes/${cardId}`, {
   method: 'PUT',
-  headers: config.headers,
-}).then(handleResponse);
-
-export const deleteLikeRequest = (cardId) => fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-  method: 'DELETE',
-  headers: config.headers,
-}).then(handleResponse);
-
-export const deleteCardRequest = (cardId) => fetch(`${config.baseUrl}/cards/${cardId}`, {
-  method: 'DELETE',
-  headers: config.headers,
-}).then(handleResponse);
+  headers: apiConfig.headers,
+}).then(handleApiResponse);

@@ -3,29 +3,26 @@ document.addEventListener("DOMContentLoaded", () => {
   popups.forEach(popup => popup.classList.add("popup_is-animated"));
 });
 
-// Функция открытия модального окна
-export function openPopup(popupElement) {
+export function showPopup(popupElement) {
   popupElement.classList.add('popup_is-opened');
-  document.addEventListener('keydown', handleEscKeyUp);
+  document.addEventListener('keydown', handleEscapeKey);
   popupElement.addEventListener("click", (evt) => {
     if (evt.currentTarget === evt.target) {
-      closePopup(popupElement);
+      hidePopup(popupElement);
     }
   });
 }
 
-// Функция закрытия модального окна
-export function closePopup(popupElement) {
-  popupElement.classList.remove('popup_is-opened');
-  document.removeEventListener('keydown', handleEscKeyUp);
-}
-
-// Функция для закрытия попапа нажатием на Esc
-export const handleEscKeyUp = (e) => {
+export const handleEscapeKey = (e) => {
   if (e.key === "Escape") {
     const popup = document.querySelector('.popup_is-opened');
     if (popup) {
-      closePopup(popup);
+      hidePopup(popup);
     }
   }
+}
+
+export function hidePopup(popupElement) {
+  popupElement.classList.remove('popup_is-opened');
+  document.removeEventListener('keydown', handleEscapeKey);
 }
