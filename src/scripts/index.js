@@ -178,6 +178,10 @@ function toggleLike(likeButton, { cardId, likeCount }) {
     .catch(console.error);
 }
 
+document.querySelector('.profile__image').addEventListener('click', function() {
+  this.classList.toggle('hover');
+});
+
 Promise.all([fetchUserInfo(), fetchCards()])
   .then(([user, cards]) => {
     userId = user._id;
