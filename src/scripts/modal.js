@@ -1,16 +1,18 @@
-document.addEventListener("DOMContentLoaded", () => {
+export function initializePopups() {
   const popups = document.querySelectorAll('.popup');
-  popups.forEach(popup => popup.classList.add("popup_is-animated"));
-});
+  popups.forEach(popup => {
+    popup.classList.add("popup_is-animated");
+    popup.addEventListener("click", (evt) => {
+      if (evt.currentTarget === evt.target) {
+        hidePopup(popup);
+      }
+    });
+  });
+}
 
 export function showPopup(popupElement) {
   popupElement.classList.add('popup_is-opened');
   document.addEventListener('keydown', handleEscapeKey);
-  popupElement.addEventListener("click", (evt) => {
-    if (evt.currentTarget === evt.target) {
-      hidePopup(popupElement);
-    }
-  });
 }
 
 export const handleEscapeKey = (e) => {

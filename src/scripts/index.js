@@ -1,7 +1,7 @@
 import { activateValidation, resetValidation } from '../scripts/validation.js';
 import { fetchUserInfo, updateAvatar, fetchCards, createCard, updateProfile, removeLike, addLike, deleteCard } from '../scripts/api.js';
 import { generateCard } from '../scripts/card.js';
-import { showPopup, hidePopup } from '../scripts/modal.js';
+import { showPopup, hidePopup, initializePopups } from '../scripts/modal.js';
 import '../pages/index.css';
 
 const elements = {
@@ -195,3 +195,7 @@ const renderInitialCards = (cards) => {
     elements.cardList.append(generateCard(el.name, el.link, el._id, el.owner._id, userId, el.likes, displayCardImage, confirmDeleteCard, toggleLike));
   });
 };
+
+document.addEventListener("DOMContentLoaded", () => {
+  initializePopups();
+});
