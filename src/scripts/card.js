@@ -1,3 +1,5 @@
+import { removeLike, addLike } from './api.js';
+
 export function removeCard(cardElement) {
   cardElement.remove();
 }
@@ -42,7 +44,7 @@ export function generateCard(cardData, userId, displayCardImage, confirmDeleteCa
   return cardElement;
 }
 
-export function toggleLike(likeButton, cardId, likeCount, removeLike, addLike) {
+export function toggleLike(likeButton, {cardId, likeCount}) {
   const likeMethod = likeButton.classList.contains('card__like-button_is-active') ? removeLike : addLike;
   likeMethod(cardId)
     .then((res) => {

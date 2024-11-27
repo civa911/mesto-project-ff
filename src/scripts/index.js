@@ -171,9 +171,9 @@ elements.closeButtons.forEach((closeButton) => {
   closeButton.addEventListener("click", () => hidePopup(popupElement));
 });
 
-function handleToggleLike(likeButton, cardId, likeCount) {
-  toggleLike(likeButton, cardId, likeCount, removeLike, addLike);
-}
+// function handleToggleLike(likeButton, cardId, likeCount) {
+//   toggleLike(likeButton, cardId, likeCount, removeLike, addLike);
+// }
 
 document.querySelector('.profile__image').addEventListener('click', (event) => {
   event.currentTarget.classList.toggle('hover');
