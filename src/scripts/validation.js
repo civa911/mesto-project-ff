@@ -2,7 +2,7 @@ function checkInputValidity(formElement, inputElement, config) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   
   if (!inputElement.validity.valid) {
-    showError(formElement, inputElement, inputElement.dataset.errorMessage || inputElement.validationMessage, config);
+    showError(formElement, inputElement, inputElement.validationMessage, config);
   } else {
     clearError(formElement, inputElement, config);
   }
