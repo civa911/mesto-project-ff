@@ -52,9 +52,13 @@ const toggleButtonState = (inputs, buttonElement, config) => {
 
 export const resetValidation = (formElement, config) => {
   const inputs = Array.from(formElement.querySelectorAll(config.inputSelector));
+  const submitButton = formElement.querySelector(config.submitButtonSelector);
+  
   inputs.forEach((inputElement) => {
     clearError(formElement, inputElement, config);
   });
+
+  toggleButtonState(inputs, submitButton, config);
 };
 
 const showError = (formElement, inputElement, errorMessage, config) => {
