@@ -188,8 +188,12 @@ Promise.all([fetchUserInfo(), fetchCards()])
   .catch(console.error);
 
 const renderInitialCards = (cards) => {
-  cards.forEach((el) => {
-    elements.cardList.append(generateCard(el.name, el.link, el._id, el.owner._id, userId, el.likes, displayCardImage, confirmDeleteCard, toggleLike));
+  cards.forEach((cardData) => {
+    if (cardData.name && cardData.link && cardData._id && cardData.owner && cardData.likes) {
+      elements.cardList.append(generateCard(cardData, userId, displayCardImage, confirmDeleteCard, toggleLike));
+    } else {
+      console.error("Invalid card data:", cardData);
+    }
   });
 };
 
