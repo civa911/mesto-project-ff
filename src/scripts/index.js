@@ -1,6 +1,6 @@
 import { activateValidation, resetValidation } from '../scripts/validation.js';
 import { fetchUserInfo, updateAvatar, fetchCards, createCard, updateProfile, removeLike, addLike, deleteCard } from '../scripts/api.js';
-import { generateCard } from '../scripts/card.js';
+import { generateCard, removeCard, toggleLike } from '../scripts/card.js';
 import { showPopup, hidePopup, initializePopups } from '../scripts/modal.js';
 import '../pages/index.css';
 
@@ -61,11 +61,11 @@ elements.avatarForm.addEventListener('submit', function(evt) {
   updateAvatar(elements.avatarUrlInput.value)
     .then((newUser) => {
       elements.profileAvatar.style.backgroundImage = `url('${newUser.avatar}')`;
+      hidePopup(elements.avatarUpdatePopup);
     })
     .catch(console.error)
     .finally(() => {
       loadingState.stop(evt.submitter);
-      hidePopup(elements.avatarUpdatePopup);
     });
 });
 
@@ -87,17 +87,22 @@ function handleProfileSubmit(evt) {
   };
   updateProfile(data)
     .then(refreshUserInfo)
+    .then(() => {
+      hidePopup(elements.profileEditPopup);
+    })
     .catch(console.error)
     .finally(() => {
       loadingState.stop(evt.submitter);
-      hidePopup(elements.profileEditPopup);
     });
 }
 
+const popupImage = document.querySelector('.popup__image');
+const popupCaption = document.querySelector('.popup__caption');
+
 export const displayCardImage = (e) => {
-  elements.imagePopup.querySelector('.popup__content').classList.add('popup__content_content_image');
-  document.querySelector('.popup__image').src = e.target.src;
-  document.querySelector('.popup__caption').textContent = e.target.alt;
+  popupImage.src = e.target.src;
+  popupImage.alt = e.target.alt;
+  popupCaption.textContent = e.target.alt;
   showPopup(elements.imagePopup);
 };
 
@@ -118,21 +123,19 @@ function addNewCard(evt) {
   })
     .then((newCardData) => {
       const cardElement = generateCard(
-        newCardData.name,
-        newCardData.link,
-        newCardData._id,
-        newCardData.owner._id,
+        newCardData,
         userId,
-        newCardData.likes,
         displayCardImage,
         confirmDeleteCard,
         toggleLike
       );
-      loadingState.stop(evt.submitter);
-      hidePopup(elements.newCardPopup);
       elements.cardList.prepend(cardElement);
+      hidePopup(elements.newCardPopup);
     })
-    .catch(console.error);
+    .catch(console.error)
+    .finally(() => {
+      loadingState.stop(evt.submitter);
+    });
 }
 
 let cardToDelete = {};
@@ -153,7 +156,7 @@ const handleDeleteSubmit = (evt) => {
 
   deleteCard(cardToDelete.id)
     .then(() => {
-      cardToDelete.cardElement.remove();
+      removeCard(cardToDelete.cardElement);
       hidePopup(elements.deleteConfirmPopup);
       cardToDelete = {};
     })
@@ -168,18 +171,12 @@ elements.closeButtons.forEach((closeButton) => {
   closeButton.addEventListener("click", () => hidePopup(popupElement));
 });
 
-function toggleLike(likeButton, { cardId, likeCount }) {
-  const likeMethod = likeButton.classList.contains('card__like-button_is-active') ? removeLike : addLike;
-  likeMethod(cardId)
-    .then((res) => {
-      likeButton.classList.toggle('card__like-button_is-active');
-      likeCount.textContent = res.likes.length;
-    })
-    .catch(console.error);
+function handleToggleLike(likeButton, cardId, likeCount) {
+  toggleLike(likeButton, cardId, likeCount, removeLike, addLike);
 }
 
-document.querySelector('.profile__image').addEventListener('click', function() {
-  this.classList.toggle('hover');
+document.querySelector('.profile__image').addEventListener('click', (event) => {
+  event.currentTarget.classList.toggle('hover');
 });
 
 Promise.all([fetchUserInfo(), fetchCards()])

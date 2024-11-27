@@ -1,4 +1,10 @@
-export const generateCard = function (name, link, cardId, ownerId, myId, likes, displayCardImage, confirmDeleteCard, toggleLike) {
+export function removeCard(cardElement) {
+  cardElement.remove();
+}
+
+export function generateCard(cardData, userId, displayCardImage, confirmDeleteCard, toggleLike) {
+  const { name, link, _id: cardId, owner: { _id: ownerId }, likes } = cardData;
+
   const cardTemplate = document.querySelector("#card-template").content;
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
   const cardImage = cardElement.querySelector('.card__image');
@@ -10,7 +16,7 @@ export const generateCard = function (name, link, cardId, ownerId, myId, likes, 
   cardImage.src = link;
   cardImage.alt = name;
 
-  if (ownerId !== myId) {
+  if (ownerId !== userId) {
     deleteButton.remove();
   } else {
     deleteButton.addEventListener("click", () => {
@@ -19,7 +25,7 @@ export const generateCard = function (name, link, cardId, ownerId, myId, likes, 
   }
 
   if (likes) {
-    if (likes.some(like => like._id === myId)) {
+    if (likes.some(like => like._id === userId)) {
       likeButton.classList.add('card__like-button_is-active');
     } else {
       likeButton.classList.remove('card__like-button_is-active');
@@ -34,4 +40,14 @@ export const generateCard = function (name, link, cardId, ownerId, myId, likes, 
   cardImage.addEventListener('click', displayCardImage);
 
   return cardElement;
-};
+}
+
+export function toggleLike(likeButton, cardId, likeCount, removeLike, addLike) {
+  const likeMethod = likeButton.classList.contains('card__like-button_is-active') ? removeLike : addLike;
+  likeMethod(cardId)
+    .then((res) => {
+      likeButton.classList.toggle('card__like-button_is-active');
+      likeCount.textContent = res.likes.length;
+    })
+    .catch(console.error);
+}
