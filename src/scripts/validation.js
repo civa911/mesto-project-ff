@@ -1,8 +1,13 @@
 function checkInputValidity(formElement, inputElement, config) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  
+
   if (!inputElement.validity.valid) {
-    showError(formElement, inputElement, inputElement.validationMessage, config);
+    showError(
+      formElement,
+      inputElement,
+      inputElement.validationMessage,
+      config
+    );
   } else {
     clearError(formElement, inputElement, config);
   }
@@ -15,7 +20,7 @@ function addInputListeners(formElement, config) {
   toggleButtonState(inputs, submitButton, config);
 
   inputs.forEach((inputElement) => {
-    inputElement.addEventListener('input', () => {
+    inputElement.addEventListener("input", () => {
       checkInputValidity(formElement, inputElement, config);
       toggleButtonState(inputs, submitButton, config);
     });
@@ -33,7 +38,7 @@ const hideError = (formElement, inputElement, config) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.remove(config.inputErrorClass);
   errorElement.classList.remove(config.errorClass);
-  errorElement.textContent = '';
+  errorElement.textContent = "";
 };
 
 const hasInvalidInput = (inputs) => {
@@ -53,7 +58,7 @@ const toggleButtonState = (inputs, buttonElement, config) => {
 export const resetValidation = (formElement, config) => {
   const inputs = Array.from(formElement.querySelectorAll(config.inputSelector));
   const submitButton = formElement.querySelector(config.submitButtonSelector);
-  
+
   inputs.forEach((inputElement) => {
     clearError(formElement, inputElement, config);
   });
@@ -70,7 +75,7 @@ const showError = (formElement, inputElement, errorMessage, config) => {
 
 function clearError(formElement, inputElement, config) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  errorElement.textContent = '';
+  errorElement.textContent = "";
   inputElement.classList.remove(config.inputErrorClass);
   errorElement.classList.remove(config.errorClass);
 }
