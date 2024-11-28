@@ -11,6 +11,11 @@ export function generateCard(
   confirmDeleteCard,
   toggleLike
 ) {
+  if (!cardData.name || !cardData.link || !cardData._id || !cardData.owner || !cardData.likes) {
+    console.error("Invalid card data:", cardData);
+    return null;
+  }
+
   const {
     name,
     link,

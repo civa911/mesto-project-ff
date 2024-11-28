@@ -180,10 +180,6 @@ elements.closeButtons.forEach((closeButton) => {
   closeButton.addEventListener("click", () => hidePopup(popupElement));
 });
 
-// function handleToggleLike(likeButton, cardId, likeCount) {
-//   toggleLike(likeButton, cardId, likeCount, removeLike, addLike);
-// }
-
 document.querySelector(".profile__image").addEventListener("click", (event) => {
   event.currentTarget.classList.toggle("hover");
 });
@@ -198,28 +194,16 @@ Promise.all([fetchUserInfo(), fetchCards()])
 
 const renderInitialCards = (cards) => {
   cards.forEach((cardData) => {
-    if (
-      cardData.name &&
-      cardData.link &&
-      cardData._id &&
-      cardData.owner &&
-      cardData.likes
-    ) {
-      elements.cardList.append(
-        generateCard(
-          cardData,
-          userId,
-          displayCardImage,
-          confirmDeleteCard,
-          toggleLike
-        )
-      );
-    } else {
-      console.error("Invalid card data:", cardData);
-    }
+    elements.cardList.append(
+      generateCard(
+        cardData,
+        userId,
+        displayCardImage,
+        confirmDeleteCard,
+        toggleLike
+      )
+    );
   });
 };
 
-document.addEventListener("DOMContentLoaded", () => {
-  initializePopups();
-});
+initializePopups();

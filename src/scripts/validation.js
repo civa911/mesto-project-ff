@@ -34,13 +34,6 @@ export function activateValidation(config) {
   });
 }
 
-const hideError = (formElement, inputElement, config) => {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove(config.inputErrorClass);
-  errorElement.classList.remove(config.errorClass);
-  errorElement.textContent = "";
-};
-
 const hasInvalidInput = (inputs) => {
   return inputs.some((inputElement) => !inputElement.validity.valid);
 };
