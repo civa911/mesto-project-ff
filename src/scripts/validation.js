@@ -78,4 +78,6 @@ function clearError(formElement, inputElement, config) {
   errorElement.textContent = "";
   inputElement.classList.remove(config.inputErrorClass);
   errorElement.classList.remove(config.errorClass);
+
+  inputElement.style.borderBottom = "";
 }
