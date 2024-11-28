@@ -5,8 +5,6 @@ import {
   fetchCards,
   createCard,
   updateProfile,
-  removeLike,
-  addLike,
   deleteCard,
 } from "../scripts/api.js";
 import { generateCard, removeCard, toggleLike } from "../scripts/card.js";
@@ -50,8 +48,7 @@ const validationConfig = {
   inputSelector: ".popup__input",
   submitButtonSelector: ".popup__button",
   inactiveButtonClass: ".button_inactive",
-  inputErrorClass: ".popup__input_type_error",
-  errorClass: ".popup__input-error_active",
+  inputErrorClass: "popup__input_type_error"
 };
 
 activateValidation(validationConfig);

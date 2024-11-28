@@ -1,6 +1,4 @@
 function checkInputValidity(formElement, inputElement, config) {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-
   if (!inputElement.validity.valid) {
     showError(
       formElement,
@@ -68,16 +66,10 @@ const showError = (formElement, inputElement, errorMessage, config) => {
   }
 
   errorElement.textContent = errorMessage;
-  errorElement.classList.add(config.errorClass);
-
-  inputElement.style.borderBottom = "1px solid red";
 };
 
 function clearError(formElement, inputElement, config) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   errorElement.textContent = "";
   inputElement.classList.remove(config.inputErrorClass);
-  errorElement.classList.remove(config.errorClass);
-
-  inputElement.style.borderBottom = "";
 }
