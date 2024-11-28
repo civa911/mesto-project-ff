@@ -62,8 +62,15 @@ export const resetValidation = (formElement, config) => {
 const showError = (formElement, inputElement, errorMessage, config) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.add(config.inputErrorClass);
+
+  if (inputElement.validity.patternMismatch) {
+    errorMessage = inputElement.dataset.errorMessage;
+  }
+
   errorElement.textContent = errorMessage;
   errorElement.classList.add(config.errorClass);
+
+  inputElement.style.borderBottom = "1px solid red";
 };
 
 function clearError(formElement, inputElement, config) {
